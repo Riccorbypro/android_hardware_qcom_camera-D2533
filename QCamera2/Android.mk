@@ -3,6 +3,7 @@ ifneq (,$(filter $(TARGET_ARCH), arm arm64))
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
+include $(LOCAL_PATH)/../common.mk
 
 LOCAL_SRC_FILES := \
         util/QCameraCmdThread.cpp \
@@ -42,11 +43,12 @@ LOCAL_C_INCLUDES := \
         $(LOCAL_PATH)/stack/common \
         frameworks/native/include/media/hardware \
         frameworks/native/include/media/openmax \
-        hardware/qcom/media/libstagefrighthw \
+        hardware/qcom/media/default/libstagefrighthw \
         system/media/camera/include \
         $(LOCAL_PATH)/../mm-image-codec/qexif \
         $(LOCAL_PATH)/../mm-image-codec/qomx_core \
         $(LOCAL_PATH)/util \
+        $(kernel_includes) \
 
 #HAL 1.0 Include paths
 LOCAL_C_INCLUDES += \
@@ -56,6 +58,9 @@ LOCAL_C_INCLUDES += \
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 LOCAL_C_INCLUDES += \
         hardware/qcom/display/msm8974/libgralloc
+
+LOCAL_C_INCLUDES+= $(kernel_includes)
+LOCAL_ADDITIONAL_DEPENDENCIES += $(common_deps)
 
 LOCAL_SHARED_LIBRARIES := libcamera_client liblog libhardware libutils libcutils libdl
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
